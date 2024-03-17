@@ -123,9 +123,7 @@ class HBNBCommand(cmd.Cmd):
             kwargs = {}
             for arg in arg_list[1:]:
                 key, value = arg.split("=")
-                value = eval(value)
-                if isinstance(value, str):
-                    value = value.replace("_", " ").replace('"', '\\"')
+                value = value.replace("_", " ").replace('"', '\\"')
                 kwargs[key] = value
         except NameError:
             print("** class doesn't exist **")
