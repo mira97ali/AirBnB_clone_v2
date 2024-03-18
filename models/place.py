@@ -7,6 +7,27 @@ from sqlalchemy.orm import relationship
 
 import models
 from models.base_model import BaseModel, Base
+from models.amenity import Amenity
+
+
+place_amenity = sqlalchemy.Table(
+    "place_amenity",
+    Base.metadata,
+    sqlalchemy.Column(
+        "place_id",
+        sqlalchemy.String(60),
+        sqlalchemy.ForeignKey("places.id"),
+        primary_key=True,
+        nullable=False
+    ),
+    sqlalchemy.Column(
+        "amenity_id",
+        sqlalchemy.String(60),
+        sqlalchemy.ForeignKey("amenities.id"),
+        primary_key=True,
+        nullable=False
+    )
+)
 
 
 class Place(BaseModel, Base):
@@ -62,3 +83,14 @@ class Place(BaseModel, Base):
                 if review[0] == "Review" and instance.place_id == self.id:
                     list_of_reviews.append(instance)
             return list_of_reviews
+
+        @property
+        def amenities(self):
+            """ Returns list of amenity ids """
+            return self.amenity_ids
+
+        @amenities.setter
+        def amenities(self, obj=None):
+            """ Appends amenity ids to the attribute """
+            if isinstance(obj, Amenity) and obj.id not in self.amenity_ids:
+                self.amenity_ids.append(obj.id)
