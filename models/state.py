@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 """ State Module for HBNB project """
 import sqlalchemy
+from sqlalchemy.orm import relationship
 
 from models.base_model import BaseModel, Base
-from models import storage
+import models
 
 
 class State(BaseModel, Base):
@@ -11,14 +12,14 @@ class State(BaseModel, Base):
     __tablename__ = "states"
 
     name = sqlalchemy.Column(sqlalchemy.String(128), nullable=False)
-    cities = sqlalchemy.relationship(
+    cities = relationship(
         "City",
         cascade="all, delete, delete-orphan",
         backref="state")
 
     @property
     def cities(self):
-        objects = storage.all()
+        objects = models.storage.all()
         list_of_cities = []
         for obj in objects:
             instance_values = obj.replace(".", " ").split()
