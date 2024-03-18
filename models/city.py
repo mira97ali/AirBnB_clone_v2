@@ -17,3 +17,7 @@ class City(BaseModel, Base):
         sqlalchemy.String(60),
         sqlalchemy.ForeignKey("states.id"),
         nullable=False)
+    places = relationship(
+        "Place",
+        cascade="all, delete, delete-orphan",
+        backref="user")
