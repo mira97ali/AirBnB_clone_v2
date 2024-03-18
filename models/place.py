@@ -7,7 +7,6 @@ from sqlalchemy.orm import relationship
 
 import models
 from models.base_model import BaseModel, Base
-from models.amenity import Amenity
 
 
 place_amenity = sqlalchemy.Table(
@@ -92,5 +91,5 @@ class Place(BaseModel, Base):
         @amenities.setter
         def amenities(self, obj=None):
             """ Appends amenity ids to the attribute """
-            if isinstance(obj, Amenity) and obj.id not in self.amenity_ids:
+            if "Amenity" in str(type(obj)) and obj.id not in self.amenity_ids:
                 self.amenity_ids.append(obj.id)
