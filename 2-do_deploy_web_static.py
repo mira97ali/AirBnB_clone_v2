@@ -2,7 +2,7 @@
 """Deploy archive!"""
 import os
 
-import fabric
+import fabric.operations
 
 
 os.env.hosts = ["100.26.254.240", "52.23.222.226"]
